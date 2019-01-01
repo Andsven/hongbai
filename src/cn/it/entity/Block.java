@@ -14,7 +14,7 @@ public class Block {
 	private int correctStartXIndex;
 	private int correctEndXIndex;
 	public enum Team{
-		RED,WHITE,YELLOW;
+		RED,WHITE,YELLOW,GRAY;
 	}
 
 	public Block(String startTime, String endTime, String artist) {

@@ -140,7 +140,10 @@ public class PaintExecutor {
 			color = Color.RED;
 		} else if (block.getTeam() == Block.Team.WHITE) {
 			color = Color.BLUE;
-		} else {
+		} else if(block.getTeam() == Block.Team.GRAY){
+			
+			
+		}else {
 			color = Color.YELLOW;
 		}
 		// 背景色
