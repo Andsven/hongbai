@@ -14,7 +14,7 @@ public class Block {
 	private int correctStartXIndex;
 	private int correctEndXIndex;
 	public enum Team{
-		RED,WHITE,YELLOW,GRAY;
+		RED,WHITE,YELLOW,GREEN;
 	}
 	
 

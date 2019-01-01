@@ -139,8 +139,8 @@ public class PaintExecutor {
 			color = Color.RED;
 		} else if (block.getTeam() == Block.Team.WHITE) {
 			color = Color.BLUE;
-		} else if(block.getTeam() == Block.Team.GRAY){
-			color = Color.DARK_GRAY;
+		} else if(block.getTeam() == Block.Team.GREEN){
+			color = Color.GREEN;
 		}else {
 			color = Color.YELLOW;
 		}

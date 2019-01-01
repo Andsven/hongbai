@@ -56,7 +56,7 @@ public class Utils {
 			String name = (String) propertyNames.nextElement();
 			// 载入参照点坐标
 			if (name.contains("referencePoint.time")) {
-				String id = name.substring(name.indexOf('_')+1);
+				String id = name.substring(name.indexOf('_'));
 				String time = p.getProperty(name);
 				String pixel = p.getProperty("referencePoint.index" + id);
 				rpList.add(new ReferencePoint(id, time, Integer.valueOf(pixel)));
@@ -164,8 +164,8 @@ public class Utils {
 				block.setTeam(Block.Team.WHITE); // 白组
 			if ("黃".equals(line[3]))
 				block.setTeam(Block.Team.YELLOW); // 非红白组歌手
-			if ("灰".equals(line[3]))
-				block.setTeam(Block.Team.GRAY); // 企划、新闻
+			if ("绿".equals(line[3]))
+				block.setTeam(Block.Team.GREEN); // 企划、新闻
 			block.setDuration(TimeUtil.calDuration(block.getStartTime(), block.getEndTime()));
 			list.add(block);
 		}

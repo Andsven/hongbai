@@ -60,6 +60,8 @@ public class TimeUtil {
 			int s = Integer.valueOf(buffer[2]);
 			return h * 60 * 60 + m * 60 + s;
 		} else {
+			System.out.println(buffer.length);
+			System.out.println(buffer[0]);
 			throw new RuntimeException("Error data!");
 		}
 	}
