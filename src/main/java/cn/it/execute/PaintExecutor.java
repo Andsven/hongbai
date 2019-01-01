@@ -23,12 +23,13 @@ import cn.it.util.Utils;
 
 public class PaintExecutor {
 
-	/*private static final int UP = 0;
-	private static final int SELF = 1;
-	private static final int DOWN = 2;*/
+	/*
+	 * private static final int UP = 0; private static final int SELF = 1; private
+	 * static final int DOWN = 2;
+	 */
 	private int totalHeight = 0;
 //	private int totalWidth = 0;
-
+	private int countOfDurationText = 0;
 
 	@Test
 	/**
@@ -54,19 +55,20 @@ public class PaintExecutor {
 			// 绘制水平线
 			// drawHorizonLine(g2d);
 			g2d.dispose();
-			String outFilePath = "C:/Users/Administrator/Desktop/";//输出到桌面
-			String ofileName = "out";					//输出文件名
+			String outFilePath = "C:/Users/Administrator/Desktop/";// 输出到桌面
+			String ofileName = "out"; // 输出文件名
 			int index = 1;
-			File outputFile = new File(outFilePath+ofileName + ".jpg");
+			File outputFile = new File(outFilePath + ofileName + ".jpg");
 			while (outputFile.exists()) {
-				outputFile = new File(outFilePath+ofileName + "_" + index + ".jpg");//重命名情况
+				outputFile = new File(outFilePath + ofileName + "_" + index + ".jpg");// 重命名情况
 				index++;
 			}
-			try(OutputStream fos = new FileOutputStream(outputFile)){
+			try (OutputStream fos = new FileOutputStream(outputFile)) {
 				ImageIO.write(image, "jpg", fos);
 				fos.flush();
 				fos.close();
-			};
+			}
+			;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -139,9 +141,9 @@ public class PaintExecutor {
 			color = Color.RED;
 		} else if (block.getTeam() == Block.Team.WHITE) {
 			color = Color.BLUE;
-		} else if(block.getTeam() == Block.Team.GREEN){
+		} else if (block.getTeam() == Block.Team.GREEN) {
 			color = Color.GREEN;
-		}else {
+		} else {
 			color = Color.YELLOW;
 		}
 		// 背景色
@@ -167,8 +169,15 @@ public class PaintExecutor {
 			y += h;
 		}
 		// 绘制block上方的持续时间
+		int YIndexOfDurationText = Utils.config.getYIndexOfBlockDurationText();
+		if (countOfDurationText % 2 == 0) {
+			YIndexOfDurationText += 4;
+		} else {
+			YIndexOfDurationText -= 8;
+		}
+		countOfDurationText++;
 		g2d.setFont(new Font(Font.SERIF, Font.PLAIN, Utils.config.getSizeOfDurationText()));
-		g2d.drawString(block.getDuration(), block.getCorrectStartXIndex() - 2, Utils.config.getYIndexOfBlockDurationText());
+		g2d.drawString(block.getDuration(), block.getCorrectStartXIndex() - 2, YIndexOfDurationText);
 	}
 
 	// 绘制水平线
