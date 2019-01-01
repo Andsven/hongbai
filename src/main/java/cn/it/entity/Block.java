@@ -16,6 +16,7 @@ public class Block {
 	public enum Team{
 		RED,WHITE,YELLOW,GRAY;
 	}
+	
 
 	public Block(String startTime, String endTime, String artist) {
 		super();
@@ -96,13 +97,9 @@ public class Block {
 		this.team = team;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Block [startTime=" + startTime + ", endTime=" + endTime + ", artist=" + artist + ", team=" + team
 				+ ", correctStartXIndex=" + correctStartXIndex + ", correctEndXIndex=" + correctEndXIndex + "]";
 	}
-
-	
 }

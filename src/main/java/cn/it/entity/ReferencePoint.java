@@ -1,6 +1,6 @@
 package cn.it.entity;
 
-import cn.it.util.Utils;
+import cn.it.util.TimeUtil;
 
 /**
  * 参照点对象
@@ -16,8 +16,8 @@ public class ReferencePoint implements Comparable<ReferencePoint>{
 	//参照坐标在原始走势图中的x坐标
 	private int pixel;
 	private int transferedTime;
-	private float leftPixelsPerSecond=0.0f;
-	private float rightPixelsPerSecond=0.0f;
+	private float leftPixelsPerSecond=-1.0f;
+	private float rightPixelsPerSecond=-1.0f;
 	
 	public ReferencePoint() {
 		super();
@@ -27,7 +27,7 @@ public class ReferencePoint implements Comparable<ReferencePoint>{
 		this.id = id;
 		this.time = time;
 		this.pixel = pixel;
-		transferedTime=Utils.transferTime2Second(time);
+		transferedTime=TimeUtil.transferTime2Second(time);
 	}
 	public String getTime() {
 		return time;

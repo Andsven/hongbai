@@ -1,6 +1,7 @@
 package cn.it.entity;
 
 import java.util.List;
+import java.util.Map;
 
 public class Config {
 	// 节目开始时间(视频中的开始时间)
@@ -16,6 +17,26 @@ public class Config {
 	
 	private int sizeOfArtistText;
 	private int sizeOfDurationText;
+
+	private int numOfDataPart;
+	private Map DataPartDurationMap;
+	
+	public int getNumOfDataPart() {
+		return numOfDataPart;
+	}
+
+	public Map getDataPartDurationMap() {
+		return DataPartDurationMap;
+	}
+
+	public void setDataPartDurationMap(Map dataPartDurationMap) {
+		DataPartDurationMap = dataPartDurationMap;
+	}
+
+	public void setNumOfDataPart(int numOfDataPart) {
+		this.numOfDataPart = numOfDataPart;
+	}
+
 
 	public int getYIndexOfTimeMarker() {
 		return YIndexOfTimeMarker;

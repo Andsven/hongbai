@@ -29,7 +29,6 @@ public class PaintExecutor {
 	private int totalHeight = 0;
 //	private int totalWidth = 0;
 
-	private Config config;
 
 	@Test
 	/**
@@ -39,10 +38,10 @@ public class PaintExecutor {
 	 */
 	public void run(File dataFile, File configFile, File imgFile) throws IOException {
 		// File configFile = new File("src/testconfig.properties");
-		this.config = Utils.initialConfig(configFile);
+		Utils.initialConfig(configFile);
 		// File dataFile = new File("src/testdata.txt");
 		List<Block> initialData = Utils.initialData(dataFile);
-		Utils.calStartAndEndIndexOfAllBlock(initialData, config.getReferencePointList());
+		Utils.calStartAndEndIndexOfAllBlock(initialData, Utils.config.getReferencePointList());
 //		try (FileInputStream fin = new FileInputStream("src/source20171231.jpg")) {
 		try (FileInputStream fin = new FileInputStream(imgFile)) {
 			BufferedImage image = ImageIO.read(fin);
@@ -51,7 +50,7 @@ public class PaintExecutor {
 			Graphics2D g2d = image.createGraphics();
 			for (Block block : initialData)
 				paintBlock(g2d, block);
-			drawTimeMarker(g2d, config.getReferencePointList());
+			drawTimeMarker(g2d, Utils.config.getReferencePointList());
 			// 绘制水平线
 			// drawHorizonLine(g2d);
 			g2d.dispose();
@@ -112,7 +111,7 @@ public class PaintExecutor {
 	 * @param i   第几个刻度
 	 */
 	private void drawOneTimeMarker(Graphics2D g2d, int x, int i) {
-		int y = config.getYIndexOfTimeMarker();
+		int y = Utils.config.getYIndexOfTimeMarker();
 		if (i % 5 == 0) {
 			g2d.drawLine(x, y - 3, x, y + 3);
 		} else {
@@ -141,8 +140,7 @@ public class PaintExecutor {
 		} else if (block.getTeam() == Block.Team.WHITE) {
 			color = Color.BLUE;
 		} else if(block.getTeam() == Block.Team.GRAY){
-			
-			
+			color = Color.DARK_GRAY;
 		}else {
 			color = Color.YELLOW;
 		}
@@ -156,11 +154,11 @@ public class PaintExecutor {
 	private void paintBlockText(Graphics2D g2d, Block block) {
 		// 设置绘制文字
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 1.0));
-		g2d.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, config.getSizeOfArtistText()));
+		g2d.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, Utils.config.getSizeOfArtistText()));
 		// 设置字体颜色
 		g2d.setColor(Color.WHITE);
 		String str = block.getArtist();
-		int y = config.getYIndexOfBlockArtistText();
+		int y = Utils.config.getYIndexOfBlockArtistText();
 		// 获取字体高度,宽度
 		int h = g2d.getFontMetrics().getHeight() - 2;
 		int w1 = ((block.getCorrectEndXIndex() - block.getCorrectStartXIndex()) - 15) / 2;
@@ -169,8 +167,8 @@ public class PaintExecutor {
 			y += h;
 		}
 		// 绘制block上方的持续时间
-		g2d.setFont(new Font(Font.SERIF, Font.PLAIN, config.getSizeOfDurationText()));
-		g2d.drawString(block.getDuration(), block.getCorrectStartXIndex() - 2, config.getYIndexOfBlockDurationText());
+		g2d.setFont(new Font(Font.SERIF, Font.PLAIN, Utils.config.getSizeOfDurationText()));
+		g2d.drawString(block.getDuration(), block.getCorrectStartXIndex() - 2, Utils.config.getYIndexOfBlockDurationText());
 	}
 
 	// 绘制水平线
