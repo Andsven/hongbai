@@ -43,11 +43,11 @@ public class PaintExecutor {
 		// File dataFile = new File("src/testdata.txt");
 		List<Block> initialData = Utils.initialData(dataFile);
 		Utils.calStartAndEndIndexOfAllBlock(initialData, Utils.config.getReferencePointList());
-//		try (FileInputStream fin = new FileInputStream("src/source20171231.jpg")) {
+		//try (FileInputStream fin = new FileInputStream("src/source20171231.jpg")) {
 		try (FileInputStream fin = new FileInputStream(imgFile)) {
 			BufferedImage image = ImageIO.read(fin);
 			totalHeight = image.getHeight();
-//			totalWidth = image.getWidth();
+			//totalWidth = image.getWidth();
 			Graphics2D g2d = image.createGraphics();
 			for (Block block : initialData)
 				paintBlock(g2d, block);
@@ -68,7 +68,6 @@ public class PaintExecutor {
 				fos.flush();
 				fos.close();
 			}
-			;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -135,7 +134,7 @@ public class PaintExecutor {
 	private void paintBlockBG(Graphics2D g2d, Block block) {
 		int x1 = block.getCorrectStartXIndex();
 		int x2 = block.getCorrectEndXIndex();
-		// 设置红白分组颜色
+		//设置矩形背景颜色
 		Color color = null;
 		if (block.getTeam() == Block.Team.RED) {
 			color = Color.RED;
@@ -146,9 +145,8 @@ public class PaintExecutor {
 		} else {
 			color = Color.YELLOW;
 		}
-		// 背景色
 		g2d.setColor(color);
-		AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 0.23);
+		AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Utils.config.getTransparencyOfRECT());
 		g2d.setComposite(ac);
 		g2d.fillRect(x1, 0, x2 - x1, totalHeight);
 	}

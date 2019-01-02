@@ -14,13 +14,21 @@ public class Config {
 	private int YIndexOfBlockDurationText;
 	//上方时间刻度Y坐标
 	private int YIndexOfTimeMarker;
-	
+	private float transparencyOfRECT;
 	private int sizeOfArtistText;
 	private int sizeOfDurationText;
 
 	private int numOfDataPart;
 	private Map DataPartDurationMap;
 	
+	public float getTransparencyOfRECT() {
+		return transparencyOfRECT;
+	}
+
+	public void setTransparencyOfRECT(float transparencyOfRECT) {
+		this.transparencyOfRECT = transparencyOfRECT;
+	}
+
 	public int getNumOfDataPart() {
 		return numOfDataPart;
 	}

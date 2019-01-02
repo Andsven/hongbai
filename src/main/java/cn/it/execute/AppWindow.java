@@ -23,12 +23,11 @@ import javax.swing.border.EmptyBorder;
 
 //import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 /**
- * 红白收视图按歌手演唱时间段划分区域
- * 需要三个文件:data.txt config.properties img.jpg
- * data.txt  视频中每组歌手演唱时间段 每组歌手一行数据(文件名必须含有"data"字符串)
- * config.properties	描绘收视图过程中需要的各种设定(文件名必须含有"config"字符串)
- * img.jpg	提前处理过的收视图原图,必须保持时间轴水平
+ * 红白收视图按歌手演唱时间段划分区域 需要三个文件:data.txt config.properties img.jpg data.txt
+ * 视频中每组歌手演唱时间段 每组歌手一行数据(文件名必须含有"data"字符串) config.properties
+ * 描绘收视图过程中需要的各种设定(文件名必须含有"config"字符串) img.jpg 提前处理过的收视图原图,必须保持时间轴水平
  * 点击run按钮生成输出图片,输出位置在桌面,文件名为out.jpg,已有重名文件则按out_1 out_2依次重命名
+ * 
  * @author golafun
  * @since 2018/12/18
  * @version 0.1
@@ -48,6 +47,8 @@ public class AppWindow extends JFrame {
 	private File dataFile;
 	private File imgFile;
 	private File configFile;
+	
+	private String oldDirPath="";
 
 	public static void main(String[] args) throws IOException {
 		EventQueue.invokeLater(new Runnable() {
@@ -128,6 +129,7 @@ public class AppWindow extends JFrame {
 	class RunButtonMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
+
 			PaintExecutor paintExecutor = new PaintExecutor();
 			try {
 				paintExecutor.run(dataFile, configFile, imgFile);
@@ -176,13 +178,19 @@ public class AppWindow extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setCurrentDirectory(new File("C:\\Users\\Administrator\\Desktop"));
+				if("".contentEquals(oldDirPath)) {
+					fileChooser.setCurrentDirectory(new File("C:\\Users\\Administrator\\Desktop"));
+				}else {
+					fileChooser.setCurrentDirectory(new File(oldDirPath));
+				}
+				
 				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);// 设定只能选择到文件
 				int state = fileChooser.showOpenDialog(getContentPane());// 此句是打开文件选择器界面的触发语句
 				if (state == 1) {
 					return;// 撤销则返回
 				} else {
 					File dir = fileChooser.getSelectedFile();
+					oldDirPath = dir.getAbsolutePath();
 					File[] listFiles = dir.listFiles();
 					for (File f : listFiles) {
 						if (f.getName().contains("data")) {

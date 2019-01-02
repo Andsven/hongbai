@@ -49,6 +49,8 @@ public class Utils {
 		config.setYIndexOfBlockDurationText(Integer.valueOf(p.getProperty("paint.block.YIndexOfBlockDurationText")));
 		config.setSizeOfArtistText(Integer.valueOf(p.getProperty("paint.block.sizeOfArtistText")));
 		config.setSizeOfDurationText(Integer.valueOf(p.getProperty("paint.block.sizeOfDurationText")));
+		config.setTransparencyOfRECT(Float.valueOf(p.getProperty("paint.block.transparencyOfRECT")));
+		
 		// 获取参照点列表
 		ArrayList<ReferencePoint> rpList = new ArrayList<ReferencePoint>();
 		Enumeration<?> propertyNames = p.propertyNames();
@@ -148,6 +150,9 @@ public class Utils {
 		String temp = null;
 		BufferedReader br = new BufferedReader(new FileReader(data));
 		while ((temp = br.readLine()) != null) {
+			if(temp.startsWith("#")) {
+				continue;
+			}
 			String[] line = temp.split("<");
 			Block block=null;
 			if (line.length == 5) { // 包含part1参数
