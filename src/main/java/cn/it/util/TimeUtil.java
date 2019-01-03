@@ -1,5 +1,9 @@
 package cn.it.util;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class TimeUtil {
 
 	
@@ -64,5 +68,22 @@ public class TimeUtil {
 			System.out.println(buffer[0]);
 			throw new RuntimeException("Error data!");
 		}
+	}
+	
+	public static String calTimeAddPartDuration(String time, String partNum, Map map) {
+		String result = time;
+		if (map.get(partNum) != null) {
+			int pno = Character.getNumericValue(partNum.charAt(partNum.length() - 1));
+			Iterator iterator = map.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, String> entry = (Entry<String, String>) iterator.next();
+				String key =  entry.getKey();
+				int no = Character.getNumericValue(key.charAt(key.length() - 1));
+				if (pno > no) {
+					result = TimeUtil.addTimeStringFormat(result, entry.getValue());
+				}
+			}
+		}
+		return result;
 	}
 }
