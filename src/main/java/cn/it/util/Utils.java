@@ -111,6 +111,7 @@ public class Utils {
 			rp.setTime(endTimeOfTimeMakerStr);
 			rp.setTransferedTime(endTimeOfTimeMaker);
 			rp.setRightPixelsPerSecond(lastRP.getLeftPixelsPerSecond());
+			rp.setLeftPixelsPerSecond(lastRP.getLeftPixelsPerSecond());
 			int differ = (int) ((endTimeOfTimeMaker - lastRP.getTransferedTime()) * lastRP.getLeftPixelsPerSecond());
 			rp.setPixel(lastRP.getPixel() + differ);
 			rpList.add(rp);

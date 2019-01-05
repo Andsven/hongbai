@@ -30,6 +30,8 @@ public class PaintExecutor {
 	private int totalHeight = 0;
 //	private int totalWidth = 0;
 	private int countOfDurationText = 0;
+	private int timeMarkerindex = 0;// 统计时间刻度数量 每5分钟加长刻度线
+
 
 	@Test
 	/**
@@ -43,11 +45,11 @@ public class PaintExecutor {
 		// File dataFile = new File("src/testdata.txt");
 		List<Block> initialData = Utils.initialData(dataFile);
 		Utils.calStartAndEndIndexOfAllBlock(initialData, Utils.config.getReferencePointList());
-		//try (FileInputStream fin = new FileInputStream("src/source20171231.jpg")) {
+		// try (FileInputStream fin = new FileInputStream("src/source20171231.jpg")) {
 		try (FileInputStream fin = new FileInputStream(imgFile)) {
 			BufferedImage image = ImageIO.read(fin);
 			totalHeight = image.getHeight();
-			//totalWidth = image.getWidth();
+			// totalWidth = image.getWidth();
 			Graphics2D g2d = image.createGraphics();
 			for (Block block : initialData)
 				paintBlock(g2d, block);
@@ -96,11 +98,8 @@ public class PaintExecutor {
 	 */
 	private void drawTimeMarkBtw2Point(Graphics2D g2d, ReferencePoint rp1, ReferencePoint rp2) {
 		int count = (rp2.getTransferedTime() - rp1.getTransferedTime()) / 60;
-		float interval = (float) (rp2.getPixel() - rp1.getPixel()) / count;
-		int x1 = rp1.getPixel();
 		for (int i = 0; i < count; i++) {
-			x1 = rp1.getPixel() + (int) (interval * i);
-			drawOneTimeMarker(g2d, x1, i);
+			drawOneTimeMarker(g2d, rp1, i);
 		}
 	}
 
@@ -111,13 +110,23 @@ public class PaintExecutor {
 	 * @param x   刻度横坐标位置
 	 * @param i   第几个刻度
 	 */
-	private void drawOneTimeMarker(Graphics2D g2d, int x, int i) {
+	/*
+	 * private void drawOneTimeMarker(Graphics2D g2d, int x, int i) { int y =
+	 * Utils.config.getYIndexOfTimeMarker(); if (timeMarkerindex % 5 == 0) {
+	 * g2d.drawLine(x, y - 3, x, y + 3); } else { g2d.drawLine(x, y - 1, x, y + 1);
+	 * } timeMarkerindex++; }
+	 */
+
+	private void drawOneTimeMarker(Graphics2D g2d, ReferencePoint rp, int i) {
+		int x = (int) (rp.getPixel() + i * rp.getRightPixelsPerSecond() * 60);
+		
 		int y = Utils.config.getYIndexOfTimeMarker();
-		if (i % 5 == 0) {
+		if (timeMarkerindex % 5 == 0) {
 			g2d.drawLine(x, y - 3, x, y + 3);
 		} else {
 			g2d.drawLine(x, y - 1, x, y + 1);
 		}
+		timeMarkerindex++;
 	}
 
 	/**
@@ -134,7 +143,7 @@ public class PaintExecutor {
 	private void paintBlockBG(Graphics2D g2d, Block block) {
 		int x1 = block.getCorrectStartXIndex();
 		int x2 = block.getCorrectEndXIndex();
-		//设置矩形背景颜色
+		// 设置矩形背景颜色
 		Color color = null;
 		if (block.getTeam() == Block.Team.RED) {
 			color = Color.RED;
