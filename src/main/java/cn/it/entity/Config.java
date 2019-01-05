@@ -21,6 +21,27 @@ public class Config {
 	private int numOfDataPart;
 	private Map DataPartDurationMap;
 	
+	private boolean PaintBackGround=false;
+	private int blockBGlength=0;
+	
+	
+	
+	public int getBlockBGlength() {
+		return blockBGlength;
+	}
+
+	public void setBlockBGlength(int blockBGlength) {
+		this.blockBGlength = blockBGlength;
+	}
+
+	public boolean isPaintBackGround() {
+		return PaintBackGround;
+	}
+
+	public void setPaintBackGround(boolean paintBackGround) {
+		PaintBackGround = paintBackGround;
+	}
+
 	public float getTransparencyOfRECT() {
 		return transparencyOfRECT;
 	}

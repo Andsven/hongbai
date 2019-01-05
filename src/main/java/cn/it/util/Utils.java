@@ -51,6 +51,13 @@ public class Utils {
 		config.setSizeOfDurationText(Integer.valueOf(p.getProperty("paint.block.sizeOfDurationText")));
 		config.setTransparencyOfRECT(Float.valueOf(p.getProperty("paint.block.transparencyOfRECT")));
 
+		if("true".equals(p.getProperty("paint.background.paintbg"))){
+			config.setPaintBackGround(true);
+			config.setBlockBGlength(Integer.valueOf(p.getProperty("paint.background.blockArtistBGLength")));
+		}else {
+			config.setPaintBackGround(false);
+		}
+		
 		// 获取参照点列表
 		ArrayList<ReferencePoint> rpList = new ArrayList<ReferencePoint>();
 		Enumeration<?> propertyNames = p.propertyNames();

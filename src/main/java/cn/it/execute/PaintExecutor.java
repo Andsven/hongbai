@@ -28,10 +28,9 @@ public class PaintExecutor {
 	 * static final int DOWN = 2;
 	 */
 	private int totalHeight = 0;
-//	private int totalWidth = 0;
+	private int totalWidth = 0;
 	private int countOfDurationText = 0;
 	private int timeMarkerindex = 0;// 统计时间刻度数量 每5分钟加长刻度线
-
 
 	@Test
 	/**
@@ -49,10 +48,22 @@ public class PaintExecutor {
 		try (FileInputStream fin = new FileInputStream(imgFile)) {
 			BufferedImage image = ImageIO.read(fin);
 			totalHeight = image.getHeight();
-			// totalWidth = image.getWidth();
+			totalWidth = image.getWidth();
 			Graphics2D g2d = image.createGraphics();
-			for (Block block : initialData)
+			// 绘制灰色背景
+			if (Utils.config.isPaintBackGround()) {
+				paintBackground(g2d, Utils.config.getYIndexOfBlockDurationText() - 5, 25);
+				paintBackground(g2d, Utils.config.getYIndexOfTimeMarker(), 12);
+				int blockBGlength = Utils.config.getBlockBGlength();
+				paintBackground(g2d, Utils.config.getYIndexOfBlockArtistText()-13+blockBGlength/2, blockBGlength);
+			}
+
+			for (Block block : initialData) {
 				paintBlock(g2d, block);
+			}
+			for (Block block : initialData) {
+				paintBlockDuration(g2d, block);
+			}
 			drawTimeMarker(g2d, Utils.config.getReferencePointList());
 			// 绘制水平线
 			// drawHorizonLine(g2d);
@@ -74,6 +85,39 @@ public class PaintExecutor {
 			e.printStackTrace();
 		} finally {
 		}
+	}
+
+	/**
+	 * 绘制block上方的持续时间
+	 * 
+	 * @param g2d
+	 * @param block
+	 */
+	private void paintBlockDuration(Graphics2D g2d, Block block) {
+
+		int YIndexOfDurationText = Utils.config.getYIndexOfBlockDurationText();
+		if (countOfDurationText % 2 == 0) {
+			YIndexOfDurationText += 6;
+		} else {
+			YIndexOfDurationText -= 6;
+		}
+		countOfDurationText++;
+		g2d.setFont(new Font(Font.SERIF, Font.PLAIN, Utils.config.getSizeOfDurationText()));
+		g2d.drawString(block.getDuration(), block.getCorrectStartXIndex() - 2, YIndexOfDurationText);
+	}
+
+	/**
+	 * 绘制灰色背景
+	 * 
+	 * @param g2d
+	 * @param yIndex 背景中心位置
+	 * @param length 背景所占的高度
+	 */
+	private void paintBackground(Graphics2D g2d, int yIndex, int length) {
+		g2d.setColor(Color.DARK_GRAY);
+		AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Utils.config.getTransparencyOfRECT());
+		g2d.setComposite(ac);
+		g2d.fillRect(0, yIndex - length / 2, totalWidth, length);
 	}
 
 	/**
@@ -110,16 +154,9 @@ public class PaintExecutor {
 	 * @param x   刻度横坐标位置
 	 * @param i   第几个刻度
 	 */
-	/*
-	 * private void drawOneTimeMarker(Graphics2D g2d, int x, int i) { int y =
-	 * Utils.config.getYIndexOfTimeMarker(); if (timeMarkerindex % 5 == 0) {
-	 * g2d.drawLine(x, y - 3, x, y + 3); } else { g2d.drawLine(x, y - 1, x, y + 1);
-	 * } timeMarkerindex++; }
-	 */
-
 	private void drawOneTimeMarker(Graphics2D g2d, ReferencePoint rp, int i) {
 		int x = (int) (rp.getPixel() + i * rp.getRightPixelsPerSecond() * 60);
-		
+
 		int y = Utils.config.getYIndexOfTimeMarker();
 		if (timeMarkerindex % 5 == 0) {
 			g2d.drawLine(x, y - 3, x, y + 3);
@@ -152,7 +189,7 @@ public class PaintExecutor {
 		} else if (block.getTeam() == Block.Team.GREEN) {
 			color = Color.GREEN;
 		} else {
-			color = Color.YELLOW;
+			color = Color.ORANGE;
 		}
 		g2d.setColor(color);
 		AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Utils.config.getTransparencyOfRECT());
@@ -175,16 +212,6 @@ public class PaintExecutor {
 			g2d.drawString(String.valueOf(str.charAt(i)), block.getCorrectStartXIndex() + w1, y);
 			y += h;
 		}
-		// 绘制block上方的持续时间
-		int YIndexOfDurationText = Utils.config.getYIndexOfBlockDurationText();
-		if (countOfDurationText % 2 == 0) {
-			YIndexOfDurationText += 4;
-		} else {
-			YIndexOfDurationText -= 8;
-		}
-		countOfDurationText++;
-		g2d.setFont(new Font(Font.SERIF, Font.PLAIN, Utils.config.getSizeOfDurationText()));
-		g2d.drawString(block.getDuration(), block.getCorrectStartXIndex() - 2, YIndexOfDurationText);
 	}
 
 	// 绘制水平线
