@@ -17,7 +17,6 @@ import javax.imageio.ImageIO;
 import org.junit.Test;
 
 import cn.it.entity.Block;
-import cn.it.entity.Config;
 import cn.it.entity.ReferencePoint;
 import cn.it.util.Utils;
 
