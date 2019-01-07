@@ -6,7 +6,12 @@ import java.util.Map.Entry;
 
 public class TimeUtil {
 
-	
+	/**
+	 * 把两个分秒格式的时间相加
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public static String addTimeStringFormat(String a, String b) {
 		String[] as = a.split(":");
 		String[] bs = b.split(":");
@@ -21,7 +26,11 @@ public class TimeUtil {
 		}
 		return null;
 	}
-	
+	/**
+	 * 秒数转换为时分秒格式字符串
+	 * @param seconds
+	 * @return
+	 */
 	public static String transferSecond2String(int seconds) {
 		if (seconds < 0) {
 			throw new RuntimeException("Error seconds");
@@ -47,9 +56,9 @@ public class TimeUtil {
 		return transferSecond2String(endSecond - startSecond);
 	}
 	/**
-	 * 時間字符串换算为当天00点到当前的秒数
+	 * 時間字符串换算为当天00点到当前时间点的秒数
 	 * 
-	 * @param time
+	 * @param time	要转换为秒数的时间（时：分：秒或分：秒）
 	 * @return
 	 */
 	public static int transferTime2Second(String time) {
@@ -70,6 +79,13 @@ public class TimeUtil {
 		}
 	}
 	
+	/**
+	 * 如果视频有分P，当前时间需要加上前几P的总共时长
+	 * @param time	当前P的时间点
+	 * @param partNum	所在的P数
+	 * @param map	保存所有分P的时间长度
+	 * @return	合计的时间点（分：秒）
+	 */
 	public static String calTimeAddPartDuration(String time, String partNum, Map map) {
 		String result = time;
 		if (map.get(partNum) != null) {
@@ -83,6 +99,8 @@ public class TimeUtil {
 					result = TimeUtil.addTimeStringFormat(result, entry.getValue());
 				}
 			}
+		}else {
+			throw new RuntimeException("current part's total duration not exists");
 		}
 		return result;
 	}
