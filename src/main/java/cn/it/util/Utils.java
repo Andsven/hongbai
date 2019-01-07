@@ -204,7 +204,7 @@ public class Utils {
 			pixelsOfPerSecond = point.getRightPixelsPerSecond();
 		}
 		if (pixelsOfPerSecond <= 0.0f) {
-			throw new RuntimeException("ERROR! pixelsOfPerSecond value has wrong");
+			throw new RuntimeException("ERROR! pixelsOfPerSecond value is wrong");
 		}
 		return point.getPixel() + Math.round((transferedTime - point.getTransferedTime()) * pixelsOfPerSecond);
 	}
