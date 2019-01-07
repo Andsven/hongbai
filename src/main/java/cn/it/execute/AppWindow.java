@@ -119,6 +119,7 @@ public class AppWindow extends JFrame {
 		JButton runButton = new JButton("run!");
 		runButton.setBounds(2, 2, 20, 10);
 		runButton.addMouseListener(new RunButtonMouseAdapter());
+		runButton.setEnabled(false);
 		p4.add(runButton);
 		msgLabel = new JLabel("Msg:");
 		p4.add(msgLabel);
@@ -167,6 +168,9 @@ public class AppWindow extends JFrame {
 					} else {
 						JlabelSetText(msgLabel, "FILENAME MUST CONTAINTS data/config/img");
 					}
+				}
+				if(dataFile!=null &&dataFile!=null && configFile!=null) {
+					
 				}
 			}
 		});
