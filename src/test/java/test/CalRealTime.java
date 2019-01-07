@@ -1,7 +1,6 @@
 package test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import cn.it.util.TimeUtil;
 
@@ -24,7 +23,9 @@ public class CalRealTime {
 		list.add(new Item("27:13","欅坂终了",true));
 		
 		list.add(new Item("41:04","乃木坂登场",true));
+
 		list.add(new Item("42:12","念信完毕",true));
+
 		list.add(new Item("43:14","表演开始",true));
 		list.add(new Item("45:42","表演结束",true));
 		list.add(new Item("46:05","乃木坂终了",true));
@@ -37,7 +38,9 @@ public class CalRealTime {
 			item.setTimeAfter(TimeUtil.transferSecond2String(correctSecond));
 		}
 		for(Item item:list) {
+
 			System.out.println("["+item.getTimeAfter()+"]"+item.getInfo());
+
 		}
 	}
 	
