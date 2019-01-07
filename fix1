@@ -1,0 +1,146 @@
+commit e19c4fbc955cc56e159e6dcbf7e51a8b5f9fe1db
+Author: andsven chen <1498704501@qq.com>
+Date:   Tue Jan 8 00:39:13 2019 +0800
+
+    temp
+
+commit 769ee75016e7007fd374f1e34287347dbc6cca83
+Merge: 58d1bef 024d866
+Author: andsven chen <1498704501@qq.com>
+Date:   Mon Jan 7 17:29:43 2019 +0800
+
+    Merge branch 'master' of github.com:Andsven/hongbai
+
+commit 58d1bef2279e18163611c66c227a17c943ba6cfa
+Author: andsven chen <1498704501@qq.com>
+Date:   Mon Jan 7 14:08:44 2019 +0800
+
+    add test file,test calRealTime function
+
+commit 024d8664d5540e14203751820cbd683ad3b27910
+Author: andsven chen <1498704501@qq.com>
+Date:   Mon Jan 7 14:08:44 2019 +0800
+
+    add test file,test calRealTime function
+
+commit 35fbf285f9cdc0420e77258732fdd8ec3c9bb47a
+Author: andsven chen <1498704501@qq.com>
+Date:   Sun Jan 6 15:41:45 2019 +0800
+
+    fix
+
+commit 5969d1f2a9f16fb068e50484cc550f41ac120d2e
+Merge: bc2e10b c7d8499
+Author: andsven chen <1498704501@qq.com>
+Date:   Sun Jan 6 03:24:15 2019 +0800
+
+    Merge branch 'master' of github.com:Andsven/hongbai
+    push new code to github
+
+commit bc2e10bb4e814f7323524a3cad7bcf7b38faa75d
+Author: andsven chen <1498704501@qq.com>
+Date:   Sun Jan 6 03:21:03 2019 +0800
+
+    add paint BG function
+
+commit c4f2ee95d47ca32e0f05092c0a361f5eec59f6b4
+Author: andsven chen <1498704501@qq.com>
+Date:   Sat Jan 5 19:31:01 2019 +0800
+
+    fix bugs
+
+commit 0ca4b36c5164959acc4dc34e3eab0fe8ced2b8e8
+Author: andsven chen <1498704501@qq.com>
+Date:   Thu Jan 3 21:02:47 2019 +0800
+
+    fix
+
+commit a81f5eea31a33f6e0a3cfa8abb337836747c8782
+Author: andsven chen <1498704501@qq.com>
+Date:   Wed Jan 2 17:12:22 2019 +0800
+
+    modify bugs
+
+commit 603f091ab546348e5e83e99981194f747caa42ef
+Author: andsven chen <1498704501@qq.com>
+Date:   Tue Jan 1 23:48:08 2019 +0800
+
+    modify position of block duration text
+
+commit 11b3afe48e28ecf2f7eef2bab69d35459f2f8714
+Author: andsven chen <1498704501@qq.com>
+Date:   Tue Jan 1 23:07:43 2019 +0800
+
+    fix bugs
+
+commit 396b06323588ab5af27bbf47611aa3be0d9e9550
+Author: andsven chen <1498704501@qq.com>
+Date:   Tue Jan 1 21:34:01 2019 +0800
+
+    modify param format of configuration files
+
+commit c7d84995394b4e9779e04a1f4b6beb87542e0cf3
+Author: andsven chen <1498704501@qq.com>
+Date:   Tue Jan 1 21:34:01 2019 +0800
+
+    modify param format of configuration files
+
+commit 0fb4798fe03bd24749ddd68a8c069d8702aea1a2
+Author: andsven chen <1498704501@qq.com>
+Date:   Tue Jan 1 21:21:34 2019 +0800
+
+    add some config parameter.load time data with many part
+
+commit ec6e07eb36f1889319ea3c053abda5213a0f3ba8
+Author: andsven chen <1498704501@qq.com>
+Date:   Tue Jan 1 16:56:27 2019 +0800
+
+    11
+
+commit da751172408c8b1baf67fcb2c9daccbd5fc78b9e
+Author: yuuryou_ <1498704501@qq.com>
+Date:   Wed Dec 26 18:20:05 2018 +0800
+
+    Update README.md
+
+commit 86f462370d5ca0a8e26d0e2460761a43bcf16e32
+Author: yuuryou_ <1498704501@qq.com>
+Date:   Wed Dec 26 18:19:23 2018 +0800
+
+    Update README.md
+
+commit 1d645bfd8c64dcd5be19217f0f7a987bf75e28a9
+Author: yuuryou_ <1498704501@qq.com>
+Date:   Wed Dec 26 18:18:44 2018 +0800
+
+    Update README.md
+
+commit cfb0ea5432558717706064d1be9aabf42edd43d8
+Author: yuuryou_ <1498704501@qq.com>
+Date:   Wed Dec 26 18:11:34 2018 +0800
+
+    Create README.md
+
+commit 66c448c1d1bc7391d0677d6a037a45926a786bb1
+Author: andsven chen <1498704501@qq.com>
+Date:   Wed Dec 26 16:27:53 2018 +0800
+
+    add config template files
+
+commit d7f7be5005fd963479f505e99973d74939ea0a30
+Author: andsven chen <1498704501@qq.com>
+Date:   Wed Dec 26 16:22:42 2018 +0800
+
+    init project
+
+commit ce17f25671b3c8d7a4bdf9bf6991d792fe4c3015
+Author: yuuryou_ <1498704501@qq.com>
+Date:   Wed Dec 26 16:22:01 2018 +0800
+
+    Delete .gitignore
+
+commit 9cbce828934ae24b6b7354d31591e6ed74c926a8
+Author: yuuryou_ <1498704501@qq.com>
+Date:   Wed Dec 26 15:55:09 2018 +0800
+
+    Initial commit

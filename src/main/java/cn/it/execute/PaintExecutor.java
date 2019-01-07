@@ -38,12 +38,9 @@ public class PaintExecutor {
 	 * @throws IOException
 	 */
 	public void run(File dataFile, File configFile, File imgFile) throws IOException {
-		// File configFile = new File("src/testconfig.properties");
 		Utils.initialConfig(configFile);
-		// File dataFile = new File("src/testdata.txt");
 		List<Block> initialData = Utils.initialData(dataFile);
 		Utils.calStartAndEndIndexOfAllBlock(initialData, Utils.config.getReferencePointList());
-		// try (FileInputStream fin = new FileInputStream("src/source20171231.jpg")) {
 		try (FileInputStream fin = new FileInputStream(imgFile)) {
 			BufferedImage image = ImageIO.read(fin);
 			totalHeight = image.getHeight();

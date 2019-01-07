@@ -9,8 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -20,6 +24,11 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+
+import cn.it.entity.Block;
+import cn.it.entity.ExportBlock;
+import cn.it.util.TimeUtil;
+import cn.it.util.Utils;
 
 //import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 /**
@@ -39,16 +48,18 @@ public class AppWindow extends JFrame {
 	private JLabel dataFileMsg;
 	private JLabel configFileMsg;
 	private JLabel imgFileMsg;
-
 	private JLabel msgLabel;
+	private JLabel exportMsgLabel;
 	private JButton dataFileButton;
 	private JButton configFileButton;
 	private JButton imgFileButton;
+	private JButton runButton;
+	private JButton exportFileButton;
 	private File dataFile;
 	private File imgFile;
 	private File configFile;
-	
-	private String oldDirPath="";
+
+	private String oldDirPath = "";
 
 	public static void main(String[] args) throws IOException {
 		EventQueue.invokeLater(new Runnable() {
@@ -78,8 +89,8 @@ public class AppWindow extends JFrame {
 		contentPanel = new JPanel();
 //		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPanel);
-		contentPanel.setLayout(new GridLayout(5, 1));
-
+		contentPanel.setLayout(new GridLayout(6, 1));
+		// data file and label
 		JPanel p1 = new JPanel();
 		p1.setLayout(new GridLayout(1, 2));
 		dataFileButton = (JButton) createFileButton("choose data file");
@@ -89,7 +100,7 @@ public class AppWindow extends JFrame {
 		dataFileMsg.setBounds(30, 10, 100, 10);
 		p1.add(dataFileMsg);
 		contentPanel.add(p1);
-
+		// config file and label
 		JPanel p2 = new JPanel();
 		p2.setLayout(new GridLayout(1, 2));
 		configFileButton = (JButton) createFileButton("choose config file");
@@ -99,7 +110,7 @@ public class AppWindow extends JFrame {
 		configFileMsg.setBounds(30, 40, 100, 40);
 		p2.add(configFileMsg);
 		contentPanel.add(p2);
-
+		// img file button and label
 		JPanel p3 = new JPanel();
 		p3.setLayout(new GridLayout(1, 2));
 		imgFileButton = (JButton) createFileButton("choose img file");
@@ -109,14 +120,14 @@ public class AppWindow extends JFrame {
 		imgFileMsg.setBounds(30, 70, 100, 70);
 		p3.add(imgFileMsg);
 		contentPanel.add(p3);
-
+		// upload file button
 		JButton uploadDirButton = createDirButton();
 		contentPanel.add(uploadDirButton);
-
+		// run button
 		JPanel p4 = new JPanel();
 		p4.setBorder(new EmptyBorder(5, 5, 5, 5));
 		p4.setLayout(new GridLayout(1, 2));
-		JButton runButton = new JButton("run!");
+		runButton = new JButton("run!");
 		runButton.setBounds(2, 2, 20, 10);
 		runButton.addMouseListener(new RunButtonMouseAdapter());
 		runButton.setEnabled(false);
@@ -125,8 +136,25 @@ public class AppWindow extends JFrame {
 		p4.add(msgLabel);
 		contentPanel.add(p4);
 
-	}
+		// export time list file
+		JPanel p5 = new JPanel();
+		p5.setBorder(new EmptyBorder(5, 5, 5, 5));
+		p5.setLayout(new GridLayout(1, 2));
+		exportFileButton = new JButton("export time list file!");
+		exportFileButton.setBounds(2, 2, 20, 10);
+		exportFileButton.addMouseListener(new ExportButtonMouseAdapter());
+		exportFileButton.setEnabled(false);
+		p5.add(exportFileButton);
+		exportMsgLabel = new JLabel("Msg:");
+		p5.add(exportMsgLabel);
+		contentPanel.add(p5);
 
+	}
+/**
+ * 运行按钮，点击画图
+ * @author Administrator
+ *
+ */
 	class RunButtonMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -141,6 +169,57 @@ public class AppWindow extends JFrame {
 		}
 	}
 
+	/**
+	 * 导出时间表文件的按钮
+	 * @author Administrator
+	 *
+	 */
+	class ExportButtonMouseAdapter extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			try {
+				Utils.initialConfig(configFile);
+				List<Block> initialData = Utils.initialData(dataFile);
+				List<ExportBlock> list = new ArrayList();
+				for (Block block : initialData) {
+					int startTimeSecond = TimeUtil.transferTime2Second(block.getStartTime())
+							- TimeUtil.transferTime2Second(Utils.config.getCorrectingTime())
+							+ TimeUtil.transferTime2Second(Utils.config.getProgramStartTime());
+					String startTimeString = TimeUtil.transferSecond2String(startTimeSecond);
+					int endTimeSecond = TimeUtil.transferTime2Second(block.getEndTime())
+							- TimeUtil.transferTime2Second(Utils.config.getCorrectingTime())
+							+ TimeUtil.transferTime2Second(Utils.config.getProgramStartTime());
+					String endTimeString = TimeUtil.transferSecond2String(endTimeSecond);
+					list.add(new ExportBlock(startTimeString, endTimeString, block.getArtist(),block.getDuration()));
+				}
+				System.out.println(list);
+
+				String outFilePath = "C:/Users/Administrator/Desktop/";// 输出到桌面
+				String ofileName = "timeList"; // 输出文件名
+				int index = 1;
+				File outputFile = new File(outFilePath + ofileName + ".txt");
+				while (outputFile.exists()) {
+					outputFile = new File(outFilePath + ofileName + "_" + index + ".txt");// 重命名情况
+					index++;
+				}
+				try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile))) {
+					for (ExportBlock eb : list) {
+						bw.write(eb.toString());
+						bw.newLine();
+					}
+				}
+				exportMsgLabel.setText("SUCCESSFUL! export OK");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * 创建带事件的文件上传按钮
+	 * @param msg
+	 * @return
+	 */
 	private Component createFileButton(String msg) {
 		JButton button = new JButton(msg);
 		button.addActionListener(new ActionListener() {
@@ -169,25 +248,31 @@ public class AppWindow extends JFrame {
 						JlabelSetText(msgLabel, "FILENAME MUST CONTAINTS data/config/img");
 					}
 				}
-				if(dataFile!=null &&dataFile!=null && configFile!=null) {
-					
+				if (dataFile != null && imgFile != null && configFile != null) {
+					runButton.setEnabled(true);
+				}
+				if (dataFile != null && configFile != null) {
+					exportFileButton.setEnabled(true);
 				}
 			}
 		});
 		return button;
 	}
-
+/**
+ * 创建带事件的文件夹上传按钮
+ * @return
+ */
 	private JButton createDirButton() {
 		JButton button = new JButton("upload Dir with Setting files");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
-				if("".contentEquals(oldDirPath)) {
+				if ("".contentEquals(oldDirPath)) {
 					fileChooser.setCurrentDirectory(new File("C:\\Users\\Administrator\\Desktop"));
-				}else {
+				} else {
 					fileChooser.setCurrentDirectory(new File(oldDirPath));
 				}
-				
+
 				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);// 设定只能选择到文件
 				int state = fileChooser.showOpenDialog(getContentPane());// 此句是打开文件选择器界面的触发语句
 				if (state == 1) {
@@ -210,18 +295,29 @@ public class AppWindow extends JFrame {
 							JlabelSetText(imgFileMsg, "path:" + f.getAbsolutePath());
 						}
 						if (dataFile != null && configFile != null && imgFile != null) {
-							JlabelSetText(msgLabel, "SUCCESSFUL! all setting files have been uploaded ");
+							JlabelSetText(msgLabel, "All files loaded!");
 						} else {
 							JlabelSetText(msgLabel, "ERROR! setting files not exist!");
 						}
 					}
-
+					if (imgFile != null && dataFile != null && configFile != null) {
+						runButton.setEnabled(true);
+					}
+					if (dataFile != null && configFile != null) {
+						exportFileButton.setEnabled(true);
+					}
 				}
 			}
 		});
 		return button;
 	}
 
+	/**
+	 * 标签中的长字符串自动换行
+	 * 
+	 * @param jLabel
+	 * @param longString
+	 */
 	void JlabelSetText(JLabel jLabel, String longString) {
 		StringBuilder builder = new StringBuilder("<html>");
 		char[] chars = longString.toCharArray();
