@@ -182,6 +182,7 @@ public class AppWindow extends JFrame {
 				List<Block> initialData = Utils.initialData(dataFile);
 				List<ExportBlock> list = new ArrayList();
 				for (Block block : initialData) {
+					//计算实际出场时间 start  end
 					int startTimeSecond = TimeUtil.transferTime2Second(block.getStartTime())
 							- TimeUtil.transferTime2Second(Utils.config.getCorrectingTime())
 							+ TimeUtil.transferTime2Second(Utils.config.getProgramStartTime());
@@ -192,7 +193,6 @@ public class AppWindow extends JFrame {
 					String endTimeString = TimeUtil.transferSecond2String(endTimeSecond);
 					list.add(new ExportBlock(startTimeString, endTimeString, block.getArtist(),block.getDuration()));
 				}
-				System.out.println(list);
 
 				String outFilePath = "C:/Users/Administrator/Desktop/";// 输出到桌面
 				String ofileName = "timeList"; // 输出文件名
@@ -250,9 +250,11 @@ public class AppWindow extends JFrame {
 				}
 				if (dataFile != null && imgFile != null && configFile != null) {
 					runButton.setEnabled(true);
+					msgLabel.setText("Msg:");
 				}
 				if (dataFile != null && configFile != null) {
 					exportFileButton.setEnabled(true);
+					exportMsgLabel.setText("Msg:");
 				}
 			}
 		});
@@ -302,9 +304,11 @@ public class AppWindow extends JFrame {
 					}
 					if (imgFile != null && dataFile != null && configFile != null) {
 						runButton.setEnabled(true);
+						msgLabel.setText("Msg:");
 					}
 					if (dataFile != null && configFile != null) {
 						exportFileButton.setEnabled(true);
+						exportMsgLabel.setText("Msg:");
 					}
 				}
 			}

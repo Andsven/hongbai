@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import cn.it.entity.Block;
 import cn.it.entity.Config;
@@ -65,10 +64,10 @@ public class Utils {
 			String name = (String) propertyNames.nextElement();
 			// 载入参照点坐标
 			if (name.contains("referencePoint.time")) {
-				String id = name.substring(name.indexOf('_'));
+				int id = getLastNumFromString(name);
 				String time = p.getProperty(name);
-				String pixel = p.getProperty("referencePoint.index" + id);
-				rpList.add(new ReferencePoint(id, time, Integer.valueOf(pixel)));
+				String pixel = p.getProperty("referencePoint.index_" + id);
+				rpList.add(new ReferencePoint(String.valueOf(id), time, Integer.valueOf(pixel)));
 			}
 			// 载入分段视频的长度
 			if (name.contains("data.time.part")) {
@@ -257,5 +256,22 @@ public class Utils {
 			listBlock.get(i).setCorrectEndXIndex(calXIndex(correctTransEndTime, listRP));
 		}
 	}
-
+	
+	/**
+	 * 从字符串中提取数字
+	 * @param origin	
+	 * @return	失败返回-1
+	 */
+	public static int getLastNumFromString(String origin) {
+		String regEx = "[^0-9]";
+		Pattern compile = Pattern.compile(regEx);
+		String numStr = compile.matcher(origin).replaceAll("");
+		try {
+			Integer result = Integer.valueOf(numStr);
+			return result;
+		} catch (NumberFormatException e) {
+			new RuntimeException("ERROR!origin string not contain num:"+origin);
+		}
+		return -1;
+	}
 }

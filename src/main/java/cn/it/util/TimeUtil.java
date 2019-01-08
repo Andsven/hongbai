@@ -93,12 +93,11 @@ public class TimeUtil {
 	 */
 	public static String calTimeAddPartDuration(String time, String partNum, Map map) {
 		String result = time;
-		int pno = Character.getNumericValue(partNum.charAt(partNum.length() - 1));
+		int pno = Utils.getLastNumFromString(partNum);
 		Iterator iterator = map.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<String, String> entry = (Entry<String, String>) iterator.next();
-			String key = entry.getKey();
-			int no = Character.getNumericValue(key.charAt(key.length() - 1));
+			int no = Utils.getLastNumFromString(entry.getKey());
 			if (pno > no) {
 				result = TimeUtil.addTimeStringFormat(result, entry.getValue());
 			}
